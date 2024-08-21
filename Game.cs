@@ -10,12 +10,17 @@ namespace NarrativeProject
         static bool isFinished;
         static string nextRoom = "";
 
+        Room previousRoom;
+
+        public void Back() => nextRoom = previousRoom.GetType().Name;
+
         internal void Add(Room room)
         {
             rooms.Add(room);
             if (currentRoom == null)
             {
                 currentRoom = room;
+                previousRoom = room;
             }
         }
 
@@ -23,7 +28,14 @@ namespace NarrativeProject
 
         internal void ReceiveChoice(string choice)
         {
-            currentRoom.ReceiveChoice(choice);
+            if (choice == "r")
+            {
+                Back();
+            }
+            else
+            {
+                currentRoom.ReceiveChoice(choice);
+            }
             CheckTransition();
         }
 
